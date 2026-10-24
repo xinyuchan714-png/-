@@ -4,7 +4,7 @@
 
 ## 啟動
     python3 server.py --seed        （Windows 請用 python server.py --seed）
-然後開啟 http://127.0.0.1:8000/admin ，預設管理密碼為 change-me。
+然後開啟 http://127.0.0.1:8000/admin ，預設管理密碼為 Heyue2026Bakery88。
 `--seed` 會建立示範資料，正式使用時請拿掉這個參數。
 
 ## 正式使用前
