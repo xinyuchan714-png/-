@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>舊振南｜管理後台</title>
+<style>
+:root{--bg:#efe7d8;--paper:#f8f2e6;--ink:#2a1f17;--muted:#6b5a4a;--line:#d8cbb5;--gold:#7a5c16;--btn:#2a1d14;--btnt:#e9cf8a;--ok:#1f5a45}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;line-height:1.6}
+header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;padding:14px 20px;background:var(--btn);color:var(--btnt)}
+header h1{font-size:1.15rem;margin:0;letter-spacing:.12em}
+header button{background:none;border:1px solid var(--btnt);color:var(--btnt);padding:4px 12px;cursor:pointer;font:inherit}
+main{max-width:1100px;margin:0 auto;padding:18px 16px 60px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.tabs button{font:inherit;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);padding:6px 16px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--btn);color:var(--btnt);border-color:var(--btn)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #c9a24f;outline-offset:2px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:16px}
+.kpi,.card{background:var(--paper);border:1px solid var(--line);padding:14px 16px}
+.kpi small{color:var(--muted);display:block}.kpi b{font-size:1.7rem;color:var(--gold);line-height:1.3;display:block}.kpi span{font-size:.85rem;color:var(--muted)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.card h3{margin:0 0 6px;font-size:1rem}
+svg{width:100%;height:auto;color:var(--muted)}
+.row{display:flex;justify-content:space-between;border-bottom:1px dashed var(--line);padding:3px 0}
+.tw{overflow-x:auto;background:var(--paper);border:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;min-width:760px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;font-size:.9rem;vertical-align:top}
+th{background:#e4d8c2;white-space:nowrap}
+select,input[type=text]{font:inherit;padding:3px 6px;border:1px solid var(--line);background:#fff;color:var(--ink);max-width:150px}
+.sv{font:inherit;background:var(--btn);color:var(--btnt);border:0;padding:3px 12px;cursor:pointer}
+#login{position:fixed;inset:0;background:rgba(42,29,20,.88);display:grid;place-items:center;z-index:9}
+#login[hidden]{display:none}
+#login form{background:var(--paper);padding:24px;width:min(340px,90vw)}
+#login input{width:100%;max-width:none;margin:8px 0}
+#msg{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--ok);color:#fff;padding:6px 18px;display:none}
+</style>
+</head>
+<body>
+<header><h1>舊振南｜管理後台</h1><button id="out" type="button">登出</button></header>
+<div id="login" hidden><form id="lf"><label for="tk"><b>請輸入管理密碼</b></label><input type="text" id="tk" autocomplete="off"><button class="sv" style="padding:6px 20px">登入</button><p id="le" style="color:#a82f28;margin:6px 0 0"></p></form></div>
+<main>
+<div class="tabs" role="tablist" id="tabs"></div>
+<div id="view" aria-live="polite"></div>
+</main>
+<div id="msg" role="status"></div>
+<script>
+var T=sessionStorage.getItem("tk")||"",cur="sum",$=function(i){return document.getElementById(i)};
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function api(p,o){o=o||{};o.headers={"X-Admin-Token":T,"Content-Type":"application/json"};
+return fetch(p,o).then(function(r){if(r.status===401){$("login").hidden=false;throw new Error("auth")}if(!r.ok)throw new Error("HTTP "+r.status);return r.json()})}
+function toast(t){var m=$("msg");m.textContent=t;m.style.display="block";setTimeout(function(){m.style.display="none"},1600)}
+function money(n){return "NT$ "+Number(n).toLocaleString()}
+function pct(a,b){return b?Math.round(a/b*100)+"%":"0%"}
+function opts(list,v){return list.map(function(x){return '<option'+(x===v?" selected":"")+'>'+esc(x)+'</option>'}).join("")}
+var TABS=[["sum","總覽"],["ord","訂購狀況"],["shp","物流"],["gft","祝福與 QR"],["rep","回禮"]];
+$("tabs").innerHTML=TABS.map(function(t){return '<button type="button" role="tab" data-t="'+t[0]+'">'+t[1]+'</button>'}).join("");
+$("tabs").onclick=function(e){if(e.target.dataset.t){cur=e.target.dataset.t;load()}};
+function bars(d,k,col){var m=Math.max.apply(null,d.map(function(x){return x[k]}).concat(1)),w=300/d.length;
+return '<svg viewBox="0 0 300 92" role="img" aria-label="'+k+' 近 14 天">'+d.map(function(x,i){var h=x[k]/m*68;return '<rect x="'+(i*w+2)+'" y="'+(74-h)+'" width="'+(w-4)+'" height="'+h+'" fill="'+col+'" rx="2"><title>'+x.d+"："+x[k]+'</title></rect>'}).join("")+
+'<text x="0" y="89" font-size="9" fill="currentColor">'+d[0].d.slice(5)+'</text><text x="300" y="89" font-size="9" text-anchor="end" fill="currentColor">'+d[d.length-1].d.slice(5)+'</text></svg>'}
+function list(o){var k=Object.keys(o);return k.length?k.map(function(x){return '<div class="row"><span>'+esc(x)+'</span><b>'+o[x]+'</b></div>'}).join(""):'<p class="muted">尚無資料</p>'}
+function table(h,r){return '<div class="tw"><table><thead><tr>'+h.map(function(x){return '<th>'+x+'</th>'}).join("")+'</tr></thead><tbody>'+(r.join("")||'<tr><td colspan="'+h.length+'">尚無資料</td></tr>')+'</tbody></table></div>'}
+var R={
+sum:function(){return api("/api/admin/summary").then(function(s){
+var tc=s.top_clicks.reduce(function(a,x){a[x.target]=x.n;return a},{});
+return '<div class="kpis">'+
+'<div class="kpi"><small>訂單數</small><b>'+s.orders+'</b><span>營收 '+money(s.revenue)+'</span></div>'+
+'<div class="kpi"><small>網站瀏覽</small><b>'+s.pageviews+'</b><span>不重複訪客 '+s.visitors+'</span></div>'+
+'<div class="kpi"><small>點擊次數</small><b>'+s.clicks+'</b><span>平均每次瀏覽 '+(s.pageviews?(s.clicks/s.pageviews).toFixed(2):0)+' 次</span></div>'+
+'<div class="kpi"><small>QR 掃描數</small><b>'+s.scans+'</b><span>已被掃描的祝福 '+s.gifts_scanned+" / "+s.gifts+'（'+pct(s.gifts_scanned,s.gifts)+'）</span></div>'+
+'<div class="kpi"><small>回禮人數</small><b>'+s.replies+'</b><span>回覆率 '+pct(s.replies,s.gifts_scanned)+'，其中 '+s.return_gifts+' 人想回送禮物</span></div></div>'+
+'<div class="cols"><div class="card"><h3>網站瀏覽（近 14 天）</h3>'+bars(s.daily,"pageviews","#7a5c16")+'</div>'+
+'<div class="card"><h3>QR 掃描（近 14 天）</h3>'+bars(s.daily,"scans","#1f5a45")+'</div>'+
+'<div class="card"><h3>新訂單（近 14 天）</h3>'+bars(s.daily,"orders","#a82f28")+'</div></div><br>'+
+'<div class="cols"><div class="card"><h3>最常被點擊</h3>'+list(tc)+'</div><div class="card"><h3>訂單狀態</h3>'+list(s.order_status)+'</div><div class="card"><h3>物流狀態</h3>'+list(s.ship_status)+'</div></div>'})},
+ord:function(){return api("/api/admin/orders").then(function(d){
+return table(["訂單編號","時間","訂購人","收件人","內容","金額","訂單狀態","物流"],d.rows.map(function(o){
+var cnt={};o.items.forEach(function(i){cnt[i]=(cnt[i]||0)+1});
+return '<tr><td>'+esc(o.order_no)+'</td><td>'+esc(o.created_at.slice(5,16))+'</td><td>'+esc(o.customer_name)+'<br><small>'+esc(o.phone)+'</small></td><td>'+esc(o.recipient_name)+'<br><small>'+esc(o.address)+'</small></td><td>'+o.box_size+' 入：'+Object.keys(cnt).map(function(k){return esc(k)+"×"+cnt[k]}).join("、")+'</td><td>'+money(o.total)+'</td><td><select data-o="'+o.id+'" aria-label="訂單狀態">'+opts(d.statuses,o.status)+'</select></td><td>'+esc(o.ship_status)+'</td></tr>'}))})},
+shp:function(){return api("/api/admin/shipments").then(function(d){
+return table(["訂單","收件資訊","物流狀態","物流商","物流單號","更新時間",""],d.rows.map(function(s){
+return '<tr><td>'+esc(s.order_no)+'</td><td>'+esc(s.recipient_name)+' '+esc(s.recipient_phone)+'<br><small>'+esc(s.address)+'</small></td><td><select id="s'+s.id+'" aria-label="物流狀態">'+opts(d.statuses,s.status)+'</select></td><td><input type="text" id="c'+s.id+'" value="'+esc(s.carrier)+'" list="cars" aria-label="物流商"></td><td><input type="text" id="t'+s.id+'" value="'+esc(s.tracking_no)+'" aria-label="物流單號"></td><td>'+esc(s.updated_at.slice(5,16))+'</td><td><button class="sv" type="button" data-s="'+s.id+'">儲存</button></td></tr>'}))+'<datalist id="cars"><option>黑貓宅急便<option>新竹物流<option>統一速達<option>郵局<option>門市自取</datalist>'})},
+gft:function(){return api("/api/admin/gifts").then(function(r){
+return table(["祝福代碼","訂單","送禮人","祝福","QR 掃描數","回覆數","祝福頁網址"],r.map(function(g){
+return '<tr><td>'+esc(g.code)+'</td><td>'+esc(g.order_no)+'</td><td>'+esc(g.sender_name)+'</td><td>'+esc(g.message)+'</td><td>'+g.scans+'</td><td>'+g.replies+'</td><td><small>'+esc(location.origin+"/g/"+g.code)+'</small></td></tr>'}))})},
+rep:function(){return api("/api/admin/replies").then(function(r){
+return table(["時間","祝福代碼","回覆人","回覆內容","想回送禮物"],r.map(function(x){
+return '<tr><td>'+esc(x.ts.slice(5,16))+'</td><td>'+esc(x.gift_code)+'</td><td>'+esc(x.name)+'</td><td>'+esc(x.message)+'</td><td>'+(x.return_gift?"是":"否")+'</td></tr>'}))})}};
+function load(){Array.prototype.forEach.call($("tabs").children,function(b){b.setAttribute("aria-selected",String(b.dataset.t===cur))});
+if(!T){$("login").hidden=false;return}
+R[cur]().then(function(h){$("view").innerHTML=h}).catch(function(e){if(e.message!=="auth")$("view").innerHTML='<p>讀取失敗：'+esc(e.message)+'</p>'})}
+$("view").addEventListener("change",function(e){var o=e.target.dataset.o;if(o)api("/api/admin/orders/"+o,{method:"PATCH",body:JSON.stringify({status:e.target.value})}).then(function(){toast("訂單狀態已更新")})});
+$("view").addEventListener("click",function(e){var s=e.target.dataset.s;if(!s)return;
+api("/api/admin/shipments/"+s,{method:"PATCH",body:JSON.stringify({status:$("s"+s).value,carrier:$("c"+s).value,tracking_no:$("t"+s).value})}).then(function(){toast("物流資料已儲存")})});
+$("lf").onsubmit=function(e){e.preventDefault();T=$("tk").value.trim();sessionStorage.setItem("tk",T);
+api("/api/admin/summary").then(function(){$("login").hidden=true;$("le").textContent="";load()}).catch(function(e){$("le").textContent=e.message==="auth"?"密碼不正確":"連不到後端（請確認網址是 http://127.0.0.1:8000/admin，且黑色視窗還開著）"})};
+$("out").onclick=function(){sessionStorage.removeItem("tk");T="";$("view").innerHTML="";$("login").hidden=false};
+load();
+</script>
+</body>
+</html>

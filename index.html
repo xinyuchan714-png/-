@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>舊振南</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@500;700&display=swap">
+<style>
+:root{--bg:#efe7d8;--paper:#f8f2e6;--ink:#2a1f17;--muted:#6b5a4a;--line:#d8cbb5;--gold:#7a5c16;--seal:#a82f28;--btn:#2a1d14;--btnt:#e9cf8a;--soft:#e4d8c2;
+--hero:#e8dcc4;--goldb:#d4af5a;--serif:"Noto Serif TC","Songti TC","PMingLiU",serif;--en:"Cormorant Garamond","Times New Roman",serif;--sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.85}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--goldb);outline-offset:2px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+/* header */
+.top{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:flex-start;padding:calc(env(safe-area-inset-top,0px) + 14px) 22px 12px;transition:background .3s}
+.top.solid{background:rgba(248,242,230,.95);box-shadow:0 1px 0 var(--line)}
+.seal{display:inline-block;color:var(--ink);text-decoration:none;text-align:center;font-family:var(--serif)}
+.seal b{display:block;border:2px double var(--ink);border-radius:8px;padding:6px 8px;font-size:1.3rem;line-height:1.15;letter-spacing:.08em;writing-mode:vertical-rl;margin:0 auto;width:max-content}
+.seal small{display:block;font-family:var(--en);font-size:.8rem;letter-spacing:.12em;margin-top:4px}
+.menubtn{background:none;border:0;color:var(--ink);font-family:var(--en);letter-spacing:.15em;font-size:.95rem;cursor:pointer;padding:4px 2px}
+.menubtn i{display:block;width:34px;height:2px;background:var(--ink);margin:5px auto;border-radius:2px}
+.menubtn i:nth-child(2){width:26px}
+.overlay{position:fixed;inset:0;z-index:30;background:var(--paper);color:var(--ink);display:grid;place-items:center;padding:20px}
+.overlay[hidden]{display:none}
+.overlay ul{list-style:none;margin:0;padding:0;text-align:center}
+.overlay li{margin:10px 0}
+.overlay a{color:var(--ink);text-decoration:none;font-family:var(--serif);font-size:1.7rem;letter-spacing:.3em}
+.overlay a:hover{color:var(--gold)}
+.overlay a small{display:block;font-family:var(--en);font-size:.85rem;letter-spacing:.2em;color:var(--gold)}
+.close{position:absolute;top:calc(env(safe-area-inset-top,0px) + 16px);right:22px;background:none;border:1px solid var(--ink);color:var(--ink);border-radius:50%;width:42px;height:42px;font-size:1.3rem;cursor:pointer}
+/* shopping badge */
+.shop{position:fixed;right:20px;bottom:calc(env(safe-area-inset-bottom,0px) + 20px);z-index:15;width:86px;height:86px;border-radius:50%;background:var(--goldb);color:#2a1d14;text-decoration:none;display:grid;place-content:center;text-align:center;font-family:var(--serif);font-weight:700;line-height:1.25;box-shadow:0 0 0 4px rgba(212,175,90,.35)}
+.shop small{display:block;font-family:var(--en);font-size:.62rem;letter-spacing:.18em}
+/* hero */
+.hero{position:relative;min-height:100vh;min-height:100svh;background:radial-gradient(ellipse at 75% 20%,#fffaf0 0%,#f3e8d2 50%,#e6d6b8 100%);overflow:hidden;display:grid;place-items:center;text-align:center;color:var(--ink)}
+.tray{position:absolute;left:-10%;right:-10%;top:30%;bottom:-20%;background:linear-gradient(180deg,#d9e4d6,#aebfac);transform:perspective(900px) rotateX(52deg);border-top:6px solid #b9a37a}
+.bun{position:absolute;width:clamp(70px,11vw,140px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f2dfb8,#cfa86f 70%,#9d7240);box-shadow:0 14px 18px rgba(90,60,30,.3)}
+.bun::after{content:"";position:absolute;inset:30%;border:2px solid #c23a32;border-radius:50%;opacity:.8}
+.hero h1{position:relative;font-family:var(--serif);font-weight:500;font-size:clamp(1.8rem,5.2vw,3.4rem);letter-spacing:.38em;margin:0;text-shadow:0 1px 14px rgba(255,255,255,.8);padding-left:.38em}
+.hero .en{position:relative;font-family:var(--en);font-size:clamp(1.3rem,3.4vw,2.3rem);letter-spacing:.06em;margin:6px 0 0;text-shadow:0 1px 12px rgba(255,255,255,.8)}
+.scroll{position:absolute;bottom:calc(env(safe-area-inset-bottom,0px) + 22px);left:50%;transform:translateX(-50%);font-family:var(--en);letter-spacing:.3em;font-size:.8rem;color:var(--muted)}
+.scroll::after{content:"";display:block;width:1px;height:34px;background:var(--muted);margin:8px auto 0}
+/* sections */
+section{padding:72px 0}
+.head{text-align:center;margin-bottom:30px}
+.head .en{font-family:var(--en);letter-spacing:.3em;color:var(--gold);font-size:.95rem}
+.head h2{font-family:var(--serif);font-weight:700;font-size:clamp(1.6rem,3.6vw,2.3rem);letter-spacing:.18em;margin:2px 0 8px;padding-left:.18em}
+.head p{color:var(--muted);max-width:34em;margin:0 auto}
+.poem{font-family:var(--serif);text-align:center;font-size:clamp(1.3rem,3vw,1.9rem);letter-spacing:.2em;line-height:2.1;padding:70px 20px}
+.svc{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.svc a{display:block;color:var(--ink);text-decoration:none;background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:26px 22px}
+.svc a:hover{border-color:var(--gold)}
+.svc .no{font-family:var(--en);font-size:2rem;color:var(--gold)}
+.svc b{display:block;font-family:var(--serif);font-size:1.25rem;letter-spacing:.12em}
+.svc span{color:var(--muted);font-size:.93rem}
+.band{background:var(--soft)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:20px}
+.btn{font:inherit;font-weight:700;letter-spacing:.12em;background:var(--btn);color:var(--btnt);border:0;border-radius:2px;padding:10px 22px;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+.palette{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:8px;margin:12px 0}
+.pal{font:inherit;color:var(--ink);background:var(--bg);border:2px solid var(--line);border-radius:4px;padding:8px;cursor:pointer;text-align:center}
+.pal small{display:block;color:var(--muted)}
+.pal[aria-pressed="true"]{border-color:var(--gold);background:var(--soft)}
+.pal .pastry{width:42px}
+.pastry{display:inline-block;width:62%;aspect-ratio:1;border-radius:50%}
+.p-mung{background:radial-gradient(circle at 35% 30%,#e2edc4,#a4bf78)}
+.p-pine{border-radius:14%;background:linear-gradient(135deg,#f0c968,#c98a1e)}
+.p-egg{background:radial-gradient(circle,#f4d05a 0 22%,#c9822e 24%,#9a5a1a)}
+.p-matcha{background:radial-gradient(circle at 35% 30%,#7fae78,#2f5a3a)}
+.p-longan{background:radial-gradient(circle at 35% 30%,#c79a68,#6b4425)}
+.sizes{display:flex;gap:8px;flex-wrap:wrap}
+.sizes button,.chips button{font:inherit;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:999px;padding:4px 16px;cursor:pointer}
+.sizes button[aria-pressed="true"]{background:var(--btn);color:var(--btnt);border-color:var(--btn)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button[aria-pressed="true"]{border-color:var(--seal);color:var(--seal);font-weight:700;background:var(--paper)}
+.grid{display:grid;gap:8px;margin:0 auto}
+.cellb{aspect-ratio:1;font:inherit;color:var(--muted);background:var(--bg);border:2px dashed var(--line);border-radius:4px;cursor:pointer;display:grid;place-items:center}
+.cellb.on{border:2px solid var(--gold);background:var(--paper)}
+.total{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px}
+.total strong{font-family:var(--en);font-size:1.7rem;color:var(--gold)}
+.note{font-size:.85rem;color:var(--muted)}
+#toast{min-height:1.7em;margin-top:8px;color:var(--gold);font-weight:500}
+.field{margin-bottom:12px}
+.l{display:block;font-weight:500;margin-bottom:4px}
+input[type=text],textarea{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:4px;padding:8px 10px}
+.cookie{width:170px;aspect-ratio:1;border-radius:50%;margin:8px auto 0;background:radial-gradient(circle at 35% 30%,#f2dfb8,#cfa86f 75%);display:grid;place-items:center;box-shadow:0 8px 14px rgba(0,0,0,.25)}
+.cookie span{font-family:var(--serif);font-weight:700;font-size:3.2rem;color:#c23a32;border:3px solid #c23a32;border-radius:50%;width:76%;aspect-ratio:1;display:grid;place-items:center;letter-spacing:0}
+.cap{text-align:center;font-size:.85rem;color:var(--muted);margin:4px 0 0}
+.preview{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+.phone{border:6px solid #17110d;border-radius:22px;background:var(--bg);padding:14px 12px;min-height:250px;text-align:center}
+.phone .from{font-family:var(--serif);font-weight:700;color:var(--gold)}
+.phone .msg{margin:8px 0;font-size:.95rem;word-break:break-word}
+.vid{background:var(--soft);aspect-ratio:16/9;display:grid;place-items:center;color:var(--muted);font-size:.85rem}
+.qrbox{background:#fff;padding:8px;width:max-content;margin:6px auto 0}
+.map{display:grid;grid-template-columns:1.2fr .8fr;gap:24px}
+.mapsvg{width:100%;height:auto;background:var(--soft);border:1px solid var(--line)}
+.pin{cursor:pointer}
+.pin circle{fill:var(--seal);stroke:#fff;stroke-width:3}
+.pin[aria-pressed="true"] circle{fill:#1f5a45;r:15}
+.pin text{font-size:15px;fill:var(--ink);font-weight:700;paint-order:stroke;stroke:var(--soft);stroke-width:4px}
+.shops{list-style:none;margin:0;padding:0}
+.shops button{width:100%;text-align:left;font:inherit;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:4px;padding:10px 12px;margin-bottom:8px;cursor:pointer}
+.shops button[aria-pressed="true"]{border-color:var(--gold);background:var(--soft)}
+.shops b{display:block}.shops span{color:var(--muted);font-size:.9rem}
+.tag{display:inline-block;background:var(--goldb);color:#2a1d14;font-size:.8rem;font-weight:700;padding:0 10px;font-style:normal}
+footer{background:var(--soft);color:var(--muted);border-top:1px solid var(--line);text-align:center;padding:48px 20px calc(env(safe-area-inset-bottom,0px) + 90px);font-size:.9rem}
+footer .seal{margin-bottom:12px}
+@media (max-width:760px){.svc,.two,.map,.preview{grid-template-columns:1fr}.hero h1{letter-spacing:.22em}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.top{transition:none}}
+#code{word-break:break-all}
+</style>
+</head>
+<body>
+<header class="top" id="top">
+<a class="seal" href="#hero" aria-label="舊振南 首頁"><b>舊振南</b><small>HEYUE PASTRY</small></a>
+<button class="menubtn" id="mb" type="button" aria-expanded="false" aria-controls="ov"><i></i><i></i><i></i>MENU</button>
+</header>
+<div class="overlay" id="ov" hidden role="dialog" aria-modal="true" aria-label="選單">
+<button class="close" id="cl" type="button" aria-label="關閉選單">×</button>
+<ul>
+<li><a href="#hero">首頁<small>HOME</small></a></li>
+<li><a href="#diy">DIY 禮盒<small>CUSTOM BOX</small></a></li>
+<li><a href="#gift">專屬心意<small>PERSONAL GIFT</small></a></li>
+<li><a href="#stores">門市限定<small>LOCAL FLAVORS</small></a></li>
+</ul>
+</div>
+<a class="shop" href="#diy"><small>SHOPPING</small>線上<br>購物</a>
+
+<div class="hero" id="hero">
+<div class="tray" aria-hidden="true">
+<span class="bun" style="left:8%;top:30%"></span><span class="bun" style="left:26%;top:8%"></span><span class="bun" style="left:44%;top:40%"></span>
+<span class="bun" style="left:62%;top:6%"></span><span class="bun" style="left:78%;top:34%"></span><span class="bun" style="left:20%;top:62%"></span><span class="bun" style="left:60%;top:66%"></span>
+</div>
+<div><h1>由手入心・一格相待</h1><p class="en">Handmade Flavor, Your Own Box</p></div>
+<div class="scroll" aria-hidden="true">SCROLL</div>
+</div>
+
+<main>
+<p class="poem">一格一格，<br>排進心意，<br>在掌心成形。</p>
+
+<section style="padding-top:0">
+<div class="wrap"><div class="svc">
+<a href="#diy"><div class="no">01</div><b>自選禮盒</b><span>這一格綠豆椪，那一格鳳梨酥，由您決定。</span></a>
+<a href="#gift"><div class="no">02</div><b>專屬心意</b><span>餅面印上祝福，掃 QR 看見您想說的話。</span></a>
+<a href="#stores"><div class="no">03</div><b>門市限定</b><span>每間門市，都有只在當地才有的口味。</span></a>
+</div></div>
+</section>
+
+<section class="band" id="diy"><div class="wrap">
+<div class="head"><div class="en">CUSTOM BOX</div><h2>自由組裝禮盒</h2><p>選禮盒格數，再選餅品；點格子放入，點已放入的格子可移除。</p></div>
+<div class="two">
+<div class="card"><div class="sizes" id="sizes" role="group" aria-label="禮盒格數"></div><div class="palette" id="pal" role="group" aria-label="餅品"></div><p class="note">價格為示意，正式上線時由後台設定。</p></div>
+<div class="card"><div class="grid" id="grid"></div>
+<div class="total"><span id="sum"></span><strong id="price">NT$ 0</strong></div>
+<div class="field" style="margin-top:14px"><label class="l" for="cn">訂購人姓名</label><input type="text" id="cn" maxlength="30"></div>
+<div class="field"><label class="l" for="cp">聯絡電話</label><input type="text" id="cp" maxlength="20" inputmode="tel"></div>
+<div class="field"><label class="l" for="rn">收件人姓名（與訂購人相同可不填）</label><input type="text" id="rn" maxlength="30"></div>
+<div class="field"><label class="l" for="ad">收件地址</label><input type="text" id="ad" maxlength="120"></div>
+<p class="note">送出訂單時，會一併建立「專屬心意」，並產生真正的 QR Code。</p>
+<div class="total"><button class="btn ghost" id="rand" type="button">隨機填滿</button><button class="btn" id="add" type="button">送出訂單</button></div>
+<div id="toast" role="status" aria-live="polite"></div></div>
+</div></div>
+</section>
+
+<section id="gift"><div class="wrap">
+<div class="head"><div class="en">PERSONAL GIFT</div><h2>專屬心意生成器</h2><p>選一個餅面印花，寫下祝福。收禮者掃描 QR Code，就能看到您的話。</p></div>
+<div class="two">
+<div class="card">
+<div class="field"><span class="l" id="plbl">餅面印花</span><div class="chips" id="pchips" role="group" aria-labelledby="plbl"></div></div>
+<div class="field"><label class="l" for="own">或自訂 1 至 2 個字</label><input type="text" id="own" maxlength="2" placeholder="例如：安"></div>
+<div class="field"><label class="l" for="from">送禮人署名</label><input type="text" id="from" maxlength="12" value="小明"></div>
+<div class="field"><label class="l" for="msg">祝福文字</label><textarea id="msg" rows="3" maxlength="80">謝謝您一直以來的照顧，願您中秋團圓，平安喜樂。</textarea></div>
+<p class="note">影音祝福上傳將在正式版提供，上傳後會先經過內容審核。</p>
+<div class="cookie" aria-label="餅面印花預覽"><span id="glyph">囍</span></div><p class="cap">餅面印花預覽</p>
+</div>
+<div class="card"><div class="preview">
+<div><div class="phone" aria-label="收禮者看到的頁面"><div class="from" id="pfrom"></div><div class="vid">影音祝福（示意）</div><div class="msg" id="pmsg"></div></div><p class="cap">收禮者掃碼後看到的畫面</p></div>
+<div><div class="qrbox" id="qr"></div><p class="cap">專屬 QR Code<br><span id="code"></span></p></div>
+</div></div>
+</div></div>
+</section>
+
+<section class="band" id="stores"><div class="wrap">
+<div class="head"><div class="en">LOCAL FLAVORS</div><h2>門市限定口味</h2><p>每間門市都有只在當地才吃得到的口味。以下門市為示意資料。</p></div>
+<div class="chips" id="fchips" role="group" aria-label="口味篩選" style="margin-bottom:16px;justify-content:center"></div>
+<div class="map">
+<svg class="mapsvg" id="svg" viewBox="0 0 400 320" role="img" aria-label="門市位置示意圖">
+<path d="M0 230 C90 200 150 260 240 225 S360 190 400 215 V320 H0Z" fill="var(--line)" opacity=".6"/>
+<path d="M40 40 L360 80 M60 280 L340 120 M200 10 L180 310" stroke="var(--line)" stroke-width="10" stroke-linecap="round" fill="none"/>
+</svg>
+<ul class="shops" id="shops"></ul>
+</div></div>
+</section>
+</main>
+<footer>
+<a class="seal" href="#hero"><b>舊振南</b><small>HEYUE PASTRY</small></a>
+<p>© 舊振南（示意網站）。價格、門市與商品資料皆為示範內容。</p>
+</footer>
+<script src="/tracker.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+var $=function(i){return document.getElementById(i)};
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+/* menu */
+var mb=$("mb"),ov=$("ov");
+function openM(o){ov.hidden=!o;mb.setAttribute("aria-expanded",String(o));if(o)$("cl").focus();else mb.focus()}
+mb.onclick=function(){openM(true)};$("cl").onclick=function(){openM(false)};
+ov.addEventListener("click",function(e){if(e.target.tagName==="A"){ov.hidden=true;mb.setAttribute("aria-expanded","false")}});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!ov.hidden)openM(false)});
+function sc(){$("top").classList.toggle("solid",window.scrollY>60)}window.addEventListener("scroll",sc);sc();
+/* DIY */
+var P=[{n:"綠豆椪",c:"p-mung",p:45},{n:"鳳梨酥",c:"p-pine",p:40},{n:"蛋黃酥",c:"p-egg",p:50},{n:"抹茶咖啡",c:"p-matcha",p:55},{n:"養生龍眼",c:"p-longan",p:55}];
+var cur=0,size=6,cells=[];
+function sizes(){var b=$("sizes");b.innerHTML="";[4,6,9].forEach(function(s){var x=el("button","",s+" 格");x.type="button";x.setAttribute("aria-pressed",String(s===size));x.onclick=function(){size=s;cells=cells.slice(0,s);sizes();draw()};b.appendChild(x)})}
+function pal(){var b=$("pal");b.innerHTML="";P.forEach(function(p,i){var x=el("button","pal");x.type="button";x.setAttribute("aria-pressed",String(i===cur));
+x.innerHTML='<span class="pastry '+p.c+'"></span><b></b><small></small>';x.children[1].textContent=p.n;x.children[2].textContent="NT$ "+p.p;x.onclick=function(){cur=i;pal()};b.appendChild(x)})}
+function draw(){var g=$("grid");g.innerHTML="";g.style.gridTemplateColumns="repeat("+(size===4?2:3)+",1fr)";g.style.maxWidth=size===4?"260px":"360px";
+for(var i=0;i<size;i++)(function(i){var v=cells[i],x=el("button","cellb"+(v!=null?" on":""));x.type="button";
+x.setAttribute("aria-label","第 "+(i+1)+" 格："+(v!=null?P[v].n+"，點擊移除":"空格，點擊放入"+P[cur].n));
+if(v!=null){x.innerHTML='<span class="pastry '+P[v].c+'"></span>'}else{x.textContent="＋"}
+x.onclick=function(){cells[i]=(cells[i]!=null)?null:cur;draw()};g.appendChild(x)})(i);
+var cnt={},t=0,n=0;for(var j=0;j<size;j++){var v=cells[j];if(v!=null){cnt[v]=(cnt[v]||0)+1;t+=P[v].p;n++}}
+$("sum").textContent=n?Object.keys(cnt).map(function(k){return P[k].n+" × "+cnt[k]}).join("，")+"（"+n+"／"+size+" 格）":"尚未放入餅品";
+$("price").textContent="NT$ "+t;$("toast").textContent=""}
+$("rand").onclick=function(){cells=[];for(var i=0;i<size;i++)cells[i]=Math.floor(Math.random()*P.length);draw()};
+var API_BASE="";  /* 前端與後端放在不同網址時，填後端網址，例如 "https://xxx.onrender.com" */
+function say(t){$("toast").textContent=t}
+$("add").onclick=function(){
+ var items=cells.slice(0,size).map(function(v){return v==null?null:P[v].n}),btn=$("add");
+ var empty=items.filter(function(x){return x===null}).length;
+ if(empty){say("還有 "+empty+" 格空著，請先排滿再送出訂單。");return}
+ if(!$("cn").value.trim()||!$("cp").value.trim()){say("請填寫訂購人姓名與聯絡電話。");return}
+ btn.disabled=true;say("送出中…");
+ fetch(API_BASE+"/api/orders",{method:"POST",body:JSON.stringify({customer_name:$("cn").value,phone:$("cp").value,recipient_name:$("rn").value,address:$("ad").value,items:items,sender_name:$("from").value,message:$("msg").value,glyph:$("own").value.trim()||gl})})
+ .then(function(r){return r.json().then(function(j){return {ok:r.ok,j:j}})})
+ .then(function(x){btn.disabled=false;if(!x.ok){say("訂單未成功："+(x.j.error||"請稍後再試"));return}
+  say("訂單已送出！編號 "+x.j.order_no+"，金額 NT$ "+x.j.total+"。");
+  if(x.j.gift_url)showQR((API_BASE||location.origin)+x.j.gift_url)})
+ .catch(function(){btn.disabled=false;say("目前無法連線到後端，請確認後端已啟動。")})};
+/* Gift */
+var G=["囍","福","壽","慶","心"],gl="囍";
+G.forEach(function(g){var b=el("button","",g);b.type="button";b.setAttribute("aria-pressed",String(g===gl));b.onclick=function(){gl=g;$("own").value="";upd()};$("pchips").appendChild(b)});
+function mark(){Array.prototype.forEach.call($("pchips").children,function(b){b.setAttribute("aria-pressed",String(b.textContent===gl&&!$("own").value))})}
+var code=Math.random().toString(36).slice(2,10);
+function upd(){var o=$("own").value.trim();$("glyph").textContent=o||gl;$("glyph").style.fontSize=o.length>1?"2rem":"";$("pfrom").textContent="來自 "+($("from").value||"送禮人")+" 的祝福";$("pmsg").textContent=$("msg").value;mark()}
+["own","from","msg"].forEach(function(i){$(i).addEventListener("input",upd)});
+$("code").textContent="代碼 "+code;
+function showQR(url){$("qr").innerHTML="";try{new QRCode($("qr"),{text:url,width:132,height:132})}catch(e){$("qr").textContent="QR（載入失敗）"}
+$("code").textContent=url.indexOf("example.com")>0?"示意用 QR（送出訂單後會換成真的）":"祝福頁："+url}
+showQR("https://example.com/gift/"+code);
+upd();
+/* Stores */
+var S=[{n:"信義潮流店",d:"鬧區・百貨商圈",f:"抹茶咖啡",x:250,y:110},{n:"大安診所旁門市",d:"中醫診所旁",f:"養生龍眼",x:130,y:170},{n:"西門快閃店",d:"限期快閃",f:"鳳梨酥（海鹽焦糖）",x:90,y:90},{n:"淡水老街店",d:"觀光老街",f:"綠豆椪（桂花）",x:315,y:235}];
+var flv=["全部"].concat(S.map(function(s){return s.f})),ff="全部",ss=0;
+function stores(){var fc=$("fchips");fc.innerHTML="";flv.forEach(function(f){var b=el("button","",f);b.type="button";b.setAttribute("aria-pressed",String(f===ff));b.onclick=function(){ff=f;var first=S.findIndex(function(s){return ff==="全部"||s.f===ff});if(first>=0)ss=first;stores()};fc.appendChild(b)});
+var l=$("shops");l.innerHTML="";var svg=$("svg");Array.prototype.slice.call(svg.querySelectorAll(".pin")).forEach(function(p){p.remove()});
+S.forEach(function(s,i){if(ff!=="全部"&&s.f!==ff)return;var li=el("li"),b=el("button");b.type="button";b.setAttribute("aria-pressed",String(i===ss));
+b.innerHTML="<b></b><span></span><br><em class='tag'></em>";b.children[0].textContent=s.n;b.children[1].textContent=s.d;b.children[3].textContent="限定：「"+s.f+"」";b.onclick=function(){ss=i;stores()};li.appendChild(b);l.appendChild(li);
+var ns="http://www.w3.org/2000/svg",g=document.createElementNS(ns,"g");g.setAttribute("class","pin");g.setAttribute("role","button");g.setAttribute("tabindex","0");g.setAttribute("aria-label",s.n);g.setAttribute("aria-pressed",String(i===ss));
+var c=document.createElementNS(ns,"circle");c.setAttribute("cx",s.x);c.setAttribute("cy",s.y);c.setAttribute("r",11);var t=document.createElementNS(ns,"text");t.setAttribute("x",s.x+16);t.setAttribute("y",s.y+5);t.textContent=s.n;
+g.appendChild(c);g.appendChild(t);g.onclick=function(){ss=i;stores()};g.onkeydown=function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();ss=i;stores()}};svg.appendChild(g)})}
+stores();sizes();pal();draw();
+</script>
+</body>
+</html>
